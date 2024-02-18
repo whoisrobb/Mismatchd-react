@@ -6,6 +6,7 @@ import Blog from "./app/dashboard/blog";
 import Site from "./app/dashboard/site";
 import Stores from "./app/dashboard/stores";
 import Home from "./app/home/home";
+import { Toaster } from "./components/ui/sonner";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="dashboard/stores" element={<Stores />} />
       </Routes>
       <Footer />
+      <Toaster />
     </div>
   )
 }

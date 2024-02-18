@@ -20,14 +20,6 @@ module.exports = ((sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        subCategory: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        imageUrls: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         slug: {
             type: DataTypes.STRING,
             allowNull: false

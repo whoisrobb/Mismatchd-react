@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
-// const authRoutes = require('./routes/auth');
-// const userRoutes = require('./routes/user');
+require('dotenv').config();
+const storeRoutes = require('./routes/site');
 const { sequelize } = require('./models');
 
 /* CONFIGURATIONS */
@@ -11,10 +10,8 @@ app.use(express.json());
 app.use(cors());
 
 
-
 /* ROUTES */
-// app.use('/auth', authRoutes);
-// app.use('/user', userRoutes);
+app.use('/site', storeRoutes);
 
 
 /* SEQUELIZE SETUP */

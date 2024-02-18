@@ -1,5 +1,5 @@
-import ContentSection from '@/layouts/content-section'
-import { UserProfile } from '@clerk/clerk-react'
+import ContentSection from '@/layouts/content-section';
+import { UserProfile } from '@clerk/clerk-react';
 
 const Account = () => {
   return (
