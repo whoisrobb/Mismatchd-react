@@ -5,6 +5,7 @@ import Account from "./app/dashboard/account";
 import Blog from "./app/dashboard/blog";
 import Site from "./app/dashboard/site";
 import Stores from "./app/dashboard/stores";
+import Store from "./app/dashboard/store";
 import Home from "./app/home/home";
 import { Toaster } from "./components/ui/sonner";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="dashboard/blog" element={<Blog />} />
         <Route path="dashboard/site" element={<Site />} />
         <Route path="dashboard/stores" element={<Stores />} />
+        <Route path="dashboard/store/:storeId" element={<Store />} />
       </Routes>
       <Footer />
       <Toaster />

@@ -4,3 +4,8 @@ export const subcategorySchema = z.object({
     title: z.string().min(3).max(50),
     description: z.string().min(3).max(50),
 });
+
+export const storeSchema = z.object({
+    name: z.string().min(3).max(50),
+    description: z.string().min(3).max(50),
+})

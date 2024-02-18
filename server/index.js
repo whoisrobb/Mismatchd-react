@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const storeRoutes = require('./routes/site');
+const siteRoutes = require('./routes/site');
+const storeRoutes = require('./routes/stores');
 const { sequelize } = require('./models');
 
 /* CONFIGURATIONS */
@@ -11,11 +12,11 @@ app.use(cors());
 
 
 /* ROUTES */
-app.use('/site', storeRoutes);
+app.use('/site', siteRoutes);
+app.use('/store', storeRoutes);
 
 
 /* SEQUELIZE SETUP */
-// sequelize.sync({ force: true })
 sequelize.sync()
     .then(() => {
         console.log('Database and tables synced')

@@ -1,7 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import ContentSection from '@/layouts/content-section';
 import SiteShell from '@/layouts/site-shell';
-import { productCategories } from '@/lib/data-temp';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Pencil1Icon, PlusIcon } from '@radix-ui/react-icons';
 import CategoryForm from '@/components/forms/category-form';
 import { useEffect, useState } from 'react';
-import { getCategory } from '@/lib/server-functions/site';
+import { getCategory } from '@/lib/server-functions/dashboard';
 import SubcategoryForm from '@/components/forms/subcategory-form';
 import { TCategory } from '@/lib/types/types';
 
@@ -29,8 +28,6 @@ const Site = () => {
     const data = await getCategory();
     setCategories(data);
   }
-
-  console.log(categories)
 
   return (
     <ContentSection

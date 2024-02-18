@@ -1,54 +1,59 @@
-import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod"
 import {
-  Form,
-  FormControl,
-//   FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+  //   FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { subcategorySchema } from "@/lib/validators/dashboard";
+import { storeSchema } from "@/lib/validators/dashboard";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
 import { useState } from "react";
-import { createSubcategory } from "@/lib/server-functions/dashboard";
+import { useUser } from "@clerk/clerk-react";
+import { createStore } from "@/lib/server-functions/dashboard";
 
-type InputSchema = z.infer<typeof subcategorySchema>
+type InputSchema = z.infer<typeof storeSchema>;
 
-const SubcategoryForm = ({categoryId}: {categoryId: string}) => {
+const StoreForm = () => {
+    const { user } = useUser();
     const form = useForm<InputSchema>({
-        resolver: zodResolver(subcategorySchema),
+        resolver: zodResolver(storeSchema),
         defaultValues: {
-            title: '',
+            name: '',
             description: ''
         }
-    });
+    })
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const onSubmit = async(values: InputSchema) => {
-        const { title, description } = values;
+    const onSubmit = async (values: InputSchema) => {
+        const { name } = values;
         setIsSubmitting(true);
-        await createSubcategory({ title, description, categoryId })
-        setIsSubmitting(false);
-    };
     
-    return (
+        if (user) {
+            await createStore({ name, userId: user.id })
+        }
+
+        setIsSubmitting(false);
+    }
+  return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         
         <FormField
           control={form.control}
-          name="title"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Store name</FormLabel>
               <FormControl>
-                <Input placeholder="title" {...field} />
+                <Input placeholder="Add store name" {...field} />
               </FormControl>
               {/* <FormDescription>
                 This is your public display name.
@@ -80,4 +85,4 @@ const SubcategoryForm = ({categoryId}: {categoryId: string}) => {
   )
 }
 
-export default SubcategoryForm;
+export default StoreForm

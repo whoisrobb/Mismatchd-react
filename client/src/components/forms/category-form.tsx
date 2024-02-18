@@ -1,4 +1,4 @@
-import { createCategory } from "@/lib/server-functions/site";
+import { createCategory } from "@/lib/server-functions/dashboard";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";

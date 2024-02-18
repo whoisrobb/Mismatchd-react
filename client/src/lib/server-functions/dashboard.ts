@@ -58,3 +58,54 @@ export const createSubcategory = async ({ title, description, categoryId }: { ti
         toast('Something went wrong!');
     }
 };
+
+export const getStores = async () => {
+    try {
+        const response = await fetch(`${serverUrl}/store`)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
+export const getSingleStore = async (storeId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/${storeId}`)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
+export const createStore = async ({ name, userId }: { name: string, userId: string }) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/create`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, userId })
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+}
