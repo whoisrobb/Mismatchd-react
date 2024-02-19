@@ -109,3 +109,22 @@ export const createStore = async ({ name, userId }: { name: string, userId: stri
         toast('Something went wrong!');
     }
 }
+
+
+export const createProduct = async ({ formData, storeId }: { formData: FormData, storeId: string }) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/products/create/${storeId}`, {
+            method: 'POST',
+            body: formData
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};

@@ -48,9 +48,33 @@ const getSingleStore = async (req, res) => {
     }
 }
 
+// CREATE PRODUCT
+const createProduct = async (req, res) => {
+    try {
+        const { storeId } = req.params;
+        const imageUrls = req.files.map((file) => `uploads/${file.filename}`);
+
+          // Create a new product instance with validated data and image URLs
+        const newProduct = await Product.create({
+            ...req.body,
+            StoreStoreId: storeId,
+            imageUrls,
+        });
+      
+        res.status(201).json(newProduct);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+// GET PRODUCTS
+
+// GET SINGLE PRODUCT
+
 
 module.exports = {
     createStore,
     getStores,
     getSingleStore,
+    createProduct,
 };

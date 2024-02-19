@@ -25,7 +25,7 @@ module.exports = ((sequelize, DataTypes) => {
             allowNull: false
         },
         imageUrls: {
-            type: DataTypes.STRING,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
         price: {

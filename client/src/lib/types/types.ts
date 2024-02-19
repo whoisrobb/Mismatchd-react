@@ -22,3 +22,17 @@ export type TStore = {
     userId: string;
     // description: string;
 }
+
+export type TProduct = {
+    productId: string;
+    name: string;
+    description: string;
+    category: string;
+    subCategory: string;
+    imageUrls: string[];
+    price: number;
+    inventory: number;
+    ratings: number;
+    tags: string;
+    StoreStoreId: string;
+}
