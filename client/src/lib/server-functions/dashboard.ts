@@ -110,12 +110,76 @@ export const createStore = async ({ name, userId }: { name: string, userId: stri
     }
 }
 
-
 export const createProduct = async ({ formData, storeId }: { formData: FormData, storeId: string }) => {
     try {
         const response = await fetch(`${serverUrl}/store/products/create/${storeId}`, {
             method: 'POST',
             body: formData
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
+export const updateProduct = async ({ formData, storeId }: { formData: FormData, storeId: string }) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/products/update/${storeId}`, {
+            method: 'PATCH',
+            body: formData
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
+export const getProducts = async () => {
+    try {
+        const response = await fetch(`${serverUrl}/store/products`)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+}
+
+export const getStoreProducts = async (storeId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/${storeId}/products`)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+}
+
+export const deleteProduct = async (productId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/products/${productId}`, {
+            method: 'DELETE'
         })
         if (response.ok) {
             const data = await response.json();

@@ -23,23 +23,28 @@ import { productSchema } from "@/lib/validators/dashboard";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import Dropzone from 'react-dropzone';
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { TCategory } from "@/lib/types/types";
-import { createProduct, getCategory } from "@/lib/server-functions/dashboard";
+import { Cross2Icon, TrashIcon } from "@radix-ui/react-icons";
+import { TCategory, TProduct } from "@/lib/types/types";
+import { deleteProduct, getCategory, updateProduct } from "@/lib/server-functions/dashboard";
 
 type InputSchema = z.infer<typeof productSchema>;
+type UpdateProductFormProps = {
+    storeId: string;
+    product: TProduct;
+    fetchStore?: () => void
+}
 
-const ProductForm = ({ storeId }: {storeId: string}) => {
+const UpdateProductForm = ({ storeId, product, fetchStore }: UpdateProductFormProps) => {
     const form = useForm<InputSchema>({
         resolver: zodResolver(productSchema),
         defaultValues: {
-            name: '',
-            description: '',
-            category: '',
-            subCategory: '',
-            price: '',
-            inventory: '',
-            tags: '',
+            name: product.name,
+            description: product.description,
+            category: product.category,
+            subCategory: product.subCategory,
+            price: product.price.toString(),
+            inventory: product.inventory.toString(),
+            tags: product.tags,
         }
     })
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,9 +75,11 @@ const ProductForm = ({ storeId }: {storeId: string}) => {
         const { name, description, category, subCategory, price, inventory, tags } = values;
         const formData = new FormData();
 
-        files.forEach((file) => {
-            formData.append('file', file);
-        });
+        if (files.length > 0) {
+            files.forEach((file) => {
+                formData.append('file', file);
+            });
+        }
         formData.append('name', name)
         formData.append('description', description)
         formData.append('category', category)
@@ -80,9 +87,14 @@ const ProductForm = ({ storeId }: {storeId: string}) => {
         formData.append('price', price)
         formData.append('inventory', inventory)
         formData.append('tags', tags)
+        formData.append('productId', product.productId)
 
-        await createProduct({formData, storeId});
-      setIsSubmitting(false);
+        await updateProduct({formData, storeId});
+        setIsSubmitting(false);
+
+        if (fetchStore) {
+            fetchStore()
+        }
     }
     
   return (
@@ -156,7 +168,7 @@ const ProductForm = ({ storeId }: {storeId: string}) => {
               <FormLabel>Set category</FormLabel>
               <FormControl>
 
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} >
                     <SelectTrigger>
                         <SelectValue placeholder="Category" />
                     </SelectTrigger>
@@ -181,7 +193,7 @@ const ProductForm = ({ storeId }: {storeId: string}) => {
               <FormLabel>Set sub-category</FormLabel>
               <FormControl>
 
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} >
                     <SelectTrigger>
                         <SelectValue placeholder="Set sub-category" />
                     </SelectTrigger>
@@ -253,11 +265,14 @@ const ProductForm = ({ storeId }: {storeId: string}) => {
             </FormItem>
           )}
         />
-        <Button disabled={isSubmitting || files.length === 0}>Submit</Button>
+        <div className="flex items-center gap-2">
+            <Button disabled={isSubmitting}>Submit</Button>
+            <Button type="button" variant={'ghost'} onClick={() => deleteProduct(product.productId)} className="hover:bg-transparent border border-transparent hover:border-[#ff4c4c] hover:text-[#ff4c4c]"><TrashIcon /></Button>
+        </div>
       </form>
     </Form>
     </div>
   )
 }
 
-export default ProductForm;
+export default UpdateProductForm;
