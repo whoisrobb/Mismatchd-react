@@ -1,5 +1,5 @@
 const express = require("express");
-const { createCategory, createSubcategory, getCategories } = require("../controllers/site");
+const { createCategory, createSubcategory, getCategories, deleteCategory, deleteSubcategory } = require("../controllers/site");
 const router = express.Router();
 
 
@@ -11,6 +11,12 @@ router.post('/category/sub/create/:categoryId', createSubcategory);
 
 //GET CATEGORIES
 router.get('/category', getCategories);
+
+// DELETE CATEGORY
+router.delete('/category/:categoryId', deleteCategory);
+
+// DELETE SUBCATEGORY
+router.delete('/category/sub/:subcategoryId', deleteSubcategory);
 
 
 module.exports = router;

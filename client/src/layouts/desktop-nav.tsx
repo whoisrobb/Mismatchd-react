@@ -25,7 +25,7 @@ const DesktopNav = () => {
       : <NavigationMenu>
           <NavigationMenuList>
               <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-muted-foreground text-lg">Lobby</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="text-muted-foreground text-lg">{siteConfig.siteNav.title}</NavigationMenuTrigger>
                   <NavigationMenuContent>
                       <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                           <li className="row-span-3">
@@ -44,7 +44,7 @@ const DesktopNav = () => {
                               </a>
                               </NavigationMenuLink>
                           </li>
-                          {siteConfig.siteNav.items.map((component) => (
+                          {siteConfig && siteConfig.siteNav.items.map((component) => (
                               <ListItem
                                   key={component.title}
                                   title={component.title}
@@ -57,7 +57,7 @@ const DesktopNav = () => {
                   </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {siteConfig.mainNav.map((nav) => (
+              {siteConfig && siteConfig.mainNav.map((nav) => (
               <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-muted-foreground text-lg capitalize">{nav.title}</NavigationMenuTrigger>
                   <NavigationMenuContent>

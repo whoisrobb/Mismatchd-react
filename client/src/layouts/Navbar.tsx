@@ -14,14 +14,15 @@ const Navbar = () => {
                 <DesktopNav />
             </div>
             <div className="flex items-center gap-2">
-                <MobileNav />
-
                 <CartSheet />
+                <MobileNav />
                 
-                <SignedIn>
-                  {user?.hasImage &&
-                  <UserButton />}
-                </SignedIn>
+                <div className="hidden lg:block md:block">
+                  <SignedIn>
+                    {user?.hasImage &&
+                    <UserButton />}
+                  </SignedIn>
+                </div>
 
                 <SignedOut>
                   <SignInButton />

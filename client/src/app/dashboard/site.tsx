@@ -10,10 +10,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from '@/components/ui/button';
-import { Pencil1Icon, PlusIcon } from '@radix-ui/react-icons';
+import { Pencil1Icon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import CategoryForm from '@/components/forms/category-form';
 import { useEffect, useState } from 'react';
-import { getCategory } from '@/lib/server-functions/dashboard';
+import { deleteSubcategory, getCategory } from '@/lib/server-functions/dashboard';
 import SubcategoryForm from '@/components/forms/subcategory-form';
 import { TCategory } from '@/lib/types/types';
 
@@ -66,7 +66,10 @@ const Site = () => {
                     {cat.Subcategories.length > 0 && cat.Subcategories.map((sub, index) => (
                     <div className="" key={index}>
                         <AccordionContent>
-                            <div className="focus:text-secondary-foreground">{sub.title}</div>
+                            <div className="focus:text-secondary-foreground flex items-center gap-2">
+                              <p>{sub.title}</p>
+                              <button className='transition-colors rounded hover:text-[#ff4c4c]' onClick={() => deleteSubcategory(sub.subcategoryId)}><TrashIcon /></button>
+                            </div>
                             <div className="text-muted-foreground focus:text-secondary-foreground">{sub.description}</div>
                         </AccordionContent>
                     </div>))}

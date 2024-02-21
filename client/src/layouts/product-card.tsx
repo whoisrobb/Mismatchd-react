@@ -7,9 +7,10 @@ type ProductCardProps = {
   name: string;
   price: number;
   productId: string;
+  category: string;
 }
 
-const ProductCard = ({ image, name, price, productId }: ProductCardProps) => {
+const ProductCard = ({ image, name, price, productId, category }: ProductCardProps) => {
   return (
     <div className="border flex flex-col justify-between rounded-md overflow-hidden text-left">
       <Link to={`/products/${productId}`} className="">
@@ -19,6 +20,7 @@ const ProductCard = ({ image, name, price, productId }: ProductCardProps) => {
       </Link>
       <div className="">
         <Link to={`/products/${productId}`} className="p-4 flex flex-col justify-self-end">
+          <p className="text-muted-foreground capitalize">{category}</p>
           <h1 className="text-2xl font-bold">{name}</h1>
           <p className="text-muted-foreground">{`KSH ${price}`}</p>
         </Link>

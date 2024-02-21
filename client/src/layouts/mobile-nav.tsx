@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/accordion";
 import { dashboardNavConfig, siteConfig } from "@/lib/nav-config";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
   
 const MobileNav = () => {
@@ -22,7 +23,7 @@ const MobileNav = () => {
     <div className="lg:hidden">
         <Sheet>
             <SheetTrigger>
-                <HamburgerMenuIcon />
+                <Button variant={'outline'} size={'icon'}><HamburgerMenuIcon /></Button>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
@@ -43,7 +44,7 @@ const MobileNav = () => {
                                 </div>))}
                             </AccordionItem>
 
-                            <AccordionItem value="item-2">
+                            <AccordionItem value="item-2" className="md:hidden">
                                 <AccordionTrigger className="capitalize text-secondary-foreground">my account</AccordionTrigger>
                                 {dashboardNavConfig.map((nav) => (
                                     <AccordionContent key={nav.title}>

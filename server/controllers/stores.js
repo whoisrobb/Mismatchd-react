@@ -119,7 +119,7 @@ const getStoreProducts = async (req, res) => {
 // GET SINGLE PRODUCT
 const getSingleProduct = async (req, res) => {
     try {
-        const { productId } = re.params;
+        const { productId } = req.params;
         const product = await Product.findByPk(productId);
         res.status(200).json(product);
     } catch (err) {

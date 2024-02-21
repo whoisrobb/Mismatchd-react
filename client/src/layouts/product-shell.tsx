@@ -16,17 +16,17 @@ const ProductShell: React.FC<ProductShellProps> = ({ children, title, subtitle, 
   return (
     <div className={cn('w-full flex flex-col items-center text-center gap-4', className)}>
         <div className="">
-            <h1 className="text-5xl font-bold">{title}</h1>
-            <p className="text-lg text-muted-foreground">{subtitle}</p>
+            <h1 className="lg:text-5xl text-3xl font-bold">{title}</h1>
+            <p className="lg:text-lg text-muted-foreground">{subtitle}</p>
         </div>
         {children}
         <div className="">
-            <Button variant={'outline'} size={'lg'}>
-                <Link to={`/${href}`} className="flex items-center space-x-2 text-lg">
-                    <p className="">{linkName}</p>
-                    <ChevronRightIcon />
-                </Link>
-            </Button>
+            <Link to={`/${href}`}>
+                <Button variant={'outline'} size={'lg'} className="flex items-center space-x-2 text-lg">
+                        <p className="">{linkName}</p>
+                        <ChevronRightIcon />
+                </Button>
+            </Link>
         </div>
     </div>
   )

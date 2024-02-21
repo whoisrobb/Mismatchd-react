@@ -15,7 +15,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
-import { createSubcategory } from "@/lib/server-functions/dashboard";
+import { createSubcategory, deleteCategory } from "@/lib/server-functions/dashboard";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 type InputSchema = z.infer<typeof subcategorySchema>
 
@@ -74,7 +75,10 @@ const SubcategoryForm = ({categoryId}: {categoryId: string}) => {
             </FormItem>
           )}
         />
-        <Button disabled={isSubmitting}>Submit</Button>
+        <div className="flex items-center gap-2">
+          <Button disabled={isSubmitting}>Submit</Button>
+          <Button type="button" variant={'ghost'} onClick={() => deleteCategory(categoryId)} className="hover:bg-transparent border border-transparent hover:border-[#ff4c4c] hover:text-[#ff4c4c]"><TrashIcon /></Button>
+        </div>
       </form>
     </Form>
   )

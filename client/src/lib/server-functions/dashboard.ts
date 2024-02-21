@@ -176,9 +176,58 @@ export const getStoreProducts = async (storeId: string) => {
     }
 }
 
+export const getSingleProduct = async (productId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/products/${productId}`)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
 export const deleteProduct = async (productId: string) => {
     try {
         const response = await fetch(`${serverUrl}/store/products/${productId}`, {
+            method: 'DELETE'
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
+export const deleteCategory = async (categoryId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/site/category/${categoryId}`, {
+            method: 'DELETE'
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
+
+export const deleteSubcategory = async (subcategoryId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/site/category/sub/${subcategoryId}`, {
             method: 'DELETE'
         })
         if (response.ok) {

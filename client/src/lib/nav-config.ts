@@ -1,5 +1,9 @@
-import { productCategories } from "./data-temp";
+// import { productCategories } from "./data-temp";
+import { getCategory } from "./server-functions/dashboard";
+import { TCategory } from "./types/types";
 
+
+const data: TCategory[] = await getCategory();
 
 export const dashboardNavConfig = [
   {
@@ -21,14 +25,14 @@ export const dashboardNavConfig = [
 ]
 
 export const siteConfig = {
-    name: "Skateshop",
+    name: "Mismatchd",
     description:
-      "An open source e-commerce skateshop build with everything new in Next.js.",
+      "An ecommerce app with an intergrated CMS dashboard built with React, Express and PostgreSQL.",
     url: "https://skateshop.sadmn.com",
     ogImage: "https://skateshop.sadmn.com/opengraph-image.png",
     // links,
     siteNav: {
-        title: "Lobby",
+        title: "Store-front",
         items: [
             {
                 title: "Products",
@@ -51,7 +55,7 @@ export const siteConfig = {
             ],
         },
     mainNav: [
-      ...productCategories.map((category) => ({
+      ...data.map((category) => ({
         title: category.title,
         items: [
           {
@@ -60,7 +64,7 @@ export const siteConfig = {
             description: `All ${category.title}.`,
             items: [],
           },
-          ...category.subcategories.map((subcategory) => ({
+          ...category.Subcategories.map((subcategory) => ({
             title: subcategory.title,
             href: `/categories/${(category.title)}`,
             description: subcategory.description,

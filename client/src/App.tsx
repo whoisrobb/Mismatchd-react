@@ -9,6 +9,7 @@ import Store from "./app/dashboard/store";
 import Home from "./app/home/home";
 import { Toaster } from "./components/ui/sonner";
 import Category from "./app/home/category";
+import Product from "./app/home/product";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path="/products/:productId" element={<Product />} />
         <Route path="/categories/:category" element={<Category />} />
         <Route path="dashboard/account" element={<Account />} />
         <Route path="dashboard/blog" element={<Blog />} />

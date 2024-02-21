@@ -23,56 +23,59 @@ const Home = () => {
   return (
     <div className="w-full flex flex-col items-center">
         <div className="flex flex-col items-center text-center h-[calc(100vh-5rem)] justify-center gap-4 max-w-6xl">
-            <Button variant={'secondary'}>
-                <Link to={'https://github.com/whoisrobb/mismatchd-react'} className="flex items-center">
-                    <GitHubLogoIcon className="mr-2" />
+            <Link to={'https://github.com/whoisrobb/mismatchd-react'}>
+                <Button variant={'secondary'} className="flex items-center">
+                        <GitHubLogoIcon className="mr-2" />
                     Star on GitHub
-                </Link>
-            </Button>
-            <h1 className="bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-transparent text-7xl font-bold">
+                </Button>
+            </Link>
+            <h1 className="bg-gradient-to-br from-foreground to-muted-foreground bg-clip-text text-transparent lg:text-7xl text-5xl font-bold">
                 No trends, just statement. Dress Loud. Express yourself loud.
             </h1>
-            <p className="text-muted-foreground text-xl">
+            <p className="text-muted-foreground lg:text-xl">
                 Mismatchd is an enterprise ecommerce app with an intergrated CMS dashboard built with React, Express and PostgreSQL.
             </p>
             <div className="flex gap-2">
-                <Button>
-                    <Link to={user ? '/products' : '/sign-in'} className="flex items-center">
+                <Link to={user ? '/products' : '/sign-in'}>
+                    <Button>
                         Buy now
-                    </Link>
-                </Button>
-                <Button variant={'outline'}>
-                    <Link to={'/dashboard/store'} className="flex items-center">
+                    </Button>
+                </Link>
+                <Link to={'/dashboard/store'}>
+                    <Button variant={'outline'}>
                         Sell now
-                    </Link>
-                </Button>
+                    </Button>
+                </Link>
             </div>
         </div>
-        <ProductShell
-            title='Featured Products'
-            subtitle='Explore products from around the world'
-            href='products'
-            linkName="View all products"
-            className=""
-        >
-            <div className="w-full grid grid-cols-4 gap-4">
-                {products.length > 1 &&
-                products.map((item) => (
-                    <ProductCard image={item.imageUrls[1]} name={item.name} price={item.price} productId={item.productId} />
-                ))}
+        <div className="flex flex-col gap-24">
+            <ProductShell
+                title='Featured Products'
+                subtitle='Fashion foward selections just for you'
+                href='products'
+                linkName="View all products"
+                className=""
+            >
+                <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
+                    {products.length > 1 &&
+                    products.map((item) => (
+                        <ProductCard image={item.imageUrls[1]} name={item.name} price={item.price} productId={item.productId} category={item.category} />
+                    ))}
+                </div>
+            </ProductShell>
+
+            <ProductShell
+                title='Featured Stores'
+                subtitle='Curated collections from our featured stores'
+                href='stores'
+                linkName="View all stores"
+                className=""
+            >
+            <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
+                content here
             </div>
-            {/* productId: string;
-                name: string;
-                description: string;
-                category: string;
-                subCategory: string;
-                imageUrls: string[];
-                price: number;
-                inventory: number;
-                ratings: number;
-                tags: string;
-                StoreStoreId: string; */}
-        </ProductShell>
+            </ProductShell>
+        </div>
     </div>
   )
 }

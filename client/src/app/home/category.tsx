@@ -1,7 +1,4 @@
 import ContentSection from "@/layouts/content-section";
-import { getCategory } from "@/lib/server-functions/dashboard";
-import { TCategory } from "@/lib/types/types";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const Category = () => {

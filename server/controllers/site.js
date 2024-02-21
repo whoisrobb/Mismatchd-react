@@ -44,9 +44,35 @@ const getCategories = async (req, res) => {
     };
 };
 
+// DELETE CATEGORY
+const deleteCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        const category = await Category.findByPk(categoryId);
+        await category.destroy();
+        res.status(200).json({ message: 'Deleted successfully!' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+// DELETE SUB-CATEGORY
+const deleteSubcategory = async (req, res) => {
+    try {
+        const { subcategoryId } = req.params;
+        const subcategory = await Subcategory.findByPk(subcategoryId);
+        await subcategory.destroy();
+        res.status(200).json({ message: 'Deleted successfully!' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 
 module.exports = {
     createCategory,
     createSubcategory,
     getCategories,
+    deleteCategory,
+    deleteSubcategory,
 };

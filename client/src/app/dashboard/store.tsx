@@ -65,10 +65,6 @@ const store = () => {
                     style={{
                       overflowY: 'scroll',
                       scrollbarWidth: 'none',
-                      // &::-webkit-scrollbar {
-                      //   width: 0;
-                      //   height: 0; /* Hide horizontal and vertical scrollbars */
-                      // }
                     }}>
                     <ProductForm storeId={storeId as string} />
                   </div>

@@ -53,11 +53,11 @@ const Stores = () => {
       </div>
       <div className="">
         {stores.length > 0 && stores.map((store) => (
-          <Button variant={'outline'} key={store.storeId} className="h-32 w-32">
-            <Link to={`/dashboard/store/${store.storeId}`}>
+          <Link to={`/dashboard/store/${store.storeId}`}>
+            <Button variant={'outline'} key={store.storeId} className="h-32 w-32">
               {store.name}
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         ))}
       </div>
     </ContentSection>
