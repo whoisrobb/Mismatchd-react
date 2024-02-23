@@ -1,8 +1,8 @@
-# [Waera Task Management](https://waera-task-management.vercel.app/)
+# [Mismatchd E-Commerce](https://mismatchd.vercel.app/)
 
-   A Kanban board-style task manager with a digital canvas for colourful "sticky notes". Intuitive drag-and-drop, real-time updates, and collaboration. Built with React frontend, node Express js backend and postgresql database
+   Mismatchd is an enterprise ecommerce app with an intergrated CMS dashboard built with React, Express and PostgreSQL.
 
-[![Waera Task Management](./client/public/mismatchd.png)](https://mismatchd.vercel.app/)
+[![Mismatchd](./client/public/mismatchd.png)](https://mismatchd.vercel.app/)
 
 > **Warning**
 > This project is a hobby/portfolio project and is still in development.
