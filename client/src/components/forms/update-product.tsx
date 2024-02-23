@@ -131,9 +131,9 @@ const UpdateProductForm = ({ storeId, product, fetchStore }: UpdateProductFormPr
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Store name</FormLabel>
+              <FormLabel>Product name</FormLabel>
               <FormControl>
-                <Input placeholder="Add store name" {...field} />
+                <Input placeholder="Add product name" {...field} />
               </FormControl>
               {/* <FormDescription>
                 This is your public display name.
@@ -150,7 +150,7 @@ const UpdateProductForm = ({ storeId, product, fetchStore }: UpdateProductFormPr
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="description" {...field} />
+                <Textarea placeholder="Description" {...field} />
               </FormControl>
               {/* <FormDescription>
                 This is your public display name.
@@ -160,94 +160,98 @@ const UpdateProductForm = ({ storeId, product, fetchStore }: UpdateProductFormPr
           )}
         />
         
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Set category</FormLabel>
-              <FormControl>
+        <div className="grid grid-cols-2 gap-4 w-full">
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Set category</FormLabel>
+                <FormControl>
 
-                <Select onValueChange={field.onChange} >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {categories.map((cat) => (
-                            <SelectItem value={cat.title} key={cat.categoryId}>{cat.title}</SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                  <Select onValueChange={field.onChange} >
+                      <SelectTrigger>
+                          <SelectValue placeholder="Category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          {categories.map((cat) => (
+                              <SelectItem value={cat.title} key={cat.categoryId}>{cat.title}</SelectItem>
+                          ))}
+                      </SelectContent>
+                  </Select>
 
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="subCategory"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Set sub-category</FormLabel>
-              <FormControl>
+          <FormField
+            control={form.control}
+            name="subCategory"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Set sub-category</FormLabel>
+                <FormControl>
 
-                <Select onValueChange={field.onChange} >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Set sub-category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        
-                    {categories.map((category) => (
-                        <div key={category.categoryId}>
-                        {category.Subcategories.map((subcategory) => (
-                            <SelectItem value={subcategory.title} key={subcategory.subcategoryId} className="subcategory">{subcategory.title}</SelectItem>
-                        ))}
-                        </div>
-                    ))}
-                    </SelectContent>
-                </Select>
+                  <Select onValueChange={field.onChange} >
+                      <SelectTrigger>
+                          <SelectValue placeholder="Set sub-category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          
+                      {categories.map((category) => (
+                          <div key={category.categoryId}>
+                          {category.Subcategories.map((subcategory) => (
+                              <SelectItem value={subcategory.title} key={subcategory.subcategoryId} className="subcategory">{subcategory.title}</SelectItem>
+                          ))}
+                          </div>
+                      ))}
+                      </SelectContent>
+                  </Select>
 
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Set price</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="Set price" {...field} />
+                </FormControl>
+                {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Set price</FormLabel>
-              <FormControl>
-                <Input placeholder="Set price" {...field} />
-              </FormControl>
-              {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="inventory"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Set inventory</FormLabel>
-              <FormControl>
-                <Input placeholder="Set inventory" {...field} />
-              </FormControl>
-              {/* <FormDescription>
-                This is your public display name.
-              </FormDescription> */}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="inventory"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Set inventory</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="Set inventory" {...field} />
+                </FormControl>
+                {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         
         <FormField
           control={form.control}

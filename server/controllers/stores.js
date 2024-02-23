@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op } = require('sequelize');
 const Store = db.Store;
 const Product = db.Product;
 
@@ -96,14 +97,58 @@ const updateProduct = async (req, res) => {
 };
 
 // GET PRODUCTS
+// const getProducts = async (req, res) => {
+//     try {
+//         const products = await Product.findAll();
+//         res.status(200).json(products);
+//     } catch (err) {
+//         res.status(500).json({ message: err.message });
+//     }
+// }
+// GET PRODUCTS WITH FILTERS
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.findAll();
+        const { priceFrom, priceTo, dateFrom, dateTo, order, orderBy, category } = req.body; // Extract filters from query params
+
+        // Build Sequelize query conditionals based on provided filters
+        const where = {};
+        if (priceFrom) {
+            where.price = { [Op.gte]: priceFrom }; // Greater than or equal to priceFrom
+        }
+        if (priceTo) {
+            where.price = { ...where.price, [Op.lte]: priceTo }; // Less than or equal to priceTo
+        }
+        if (dateFrom) {
+            where.createdAt = { [Op.gte]: dateFrom }; // Greater than or equal to dateFrom
+        }
+        if (dateTo) {
+            where.createdAt = { ...where.createdAt, [Op.lte]: dateTo }; // Less than or equal to dateTo
+        }
+        if (category) {
+          where.category = category; // Filter by category ID
+        }    
+
+        // Build Sequelize order options based on user input
+        const orderOptions = [];
+        if (orderBy) {
+            orderOptions.push([orderBy, order === 'asc' ? 'ASC' : 'DESC']);
+        } else {
+            // Fallback default order (e.g., created_at DESC)
+            orderOptions.push(['createdAt', 'DESC']);
+        }
+
+        // Fetch products with filters and order
+        const products = await Product.findAll({
+            where,
+            order: orderOptions,
+        });
+
         res.status(200).json(products);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
-}
+};
+
 
 // GET STORE PRODUCTS
 const getStoreProducts = async (req, res) => {

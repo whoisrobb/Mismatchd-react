@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { serverUrl } from "../utils";
+import { TFilters } from "../types/types";
 
 
 export const getCategory = async () => {
@@ -149,6 +150,25 @@ export const updateProduct = async ({ formData, storeId }: { formData: FormData,
 export const getProducts = async () => {
     try {
         const response = await fetch(`${serverUrl}/store/products`)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+}
+
+export const getFilteredProducts = async (filters: TFilters) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/products/filtered`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(filters),
+        });
         if (response.ok) {
             const data = await response.json();
             return data;

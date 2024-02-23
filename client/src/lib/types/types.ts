@@ -36,3 +36,11 @@ export type TProduct = {
     tags: string;
     StoreStoreId: string;
 }
+
+export type TFilters = {
+    priceFrom? : string | null;
+    priceTo? : string | null;
+    order? : string | null;
+    orderBy? : string | null;
+    category? : string | null;
+};

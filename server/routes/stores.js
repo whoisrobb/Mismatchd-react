@@ -16,6 +16,9 @@ const router = express.Router();
 // GET ALL THE PRODUCTS
 router.get('/products', getProducts);
 
+// GET PRODUCTS WITH FILTERS
+router.post('/products/filtered', getProducts);
+
 // GET SINGLE PRODUCT
 router.get('/products/:productId', getSingleProduct);
 

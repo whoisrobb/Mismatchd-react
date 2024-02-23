@@ -1,13 +1,15 @@
+import { CartProduct, useCart } from "@/checkout/cart-provider";
 import { Button } from "@/components/ui/button";
 import ContentSection from "@/layouts/content-section"
 import { getSingleProduct } from "@/lib/server-functions/dashboard";
 import { TProduct } from "@/lib/types/types";
 import { serverUrl } from "@/lib/utils";
-import { StarFilledIcon } from "@radix-ui/react-icons";
+import { MinusIcon, PlusIcon, StarFilledIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 
 const Product = () => {
+    const { getItemQuantity, addToCart, increaseQuantity, decreaseQuantity } = useCart();
     const { productId } = useParams();
     const [productData, setProductData] = useState<TProduct | null>(null);
 
@@ -19,6 +21,8 @@ const Product = () => {
         const data = await getSingleProduct(productId as string);
         setProductData(data);
     }
+
+    const quantity = getItemQuantity(productData?.productId as string);
 
     const ratingElements = Array.from({ length: productData?.ratings as number }, (_, index) => (
         <StarFilledIcon key={index} />
@@ -53,7 +57,13 @@ const Product = () => {
                     </div>
                 </div>
                 <div className="">
-                    <Button className="w-full">Add to cart</Button>
+                    {quantity > 0 ?
+                    <div className="flex items-center gap-2">
+                        <Button variant={'outline'} size={'icon'} className="" onClick={() => decreaseQuantity(productData.productId)}><MinusIcon /></Button>
+                        <div className="">{quantity}</div>
+                        <Button variant={'outline'} size={'icon'} className="" onClick={() => increaseQuantity(productData.productId)}><PlusIcon /></Button>
+                    </div>
+                    : <Button size={'sm'} onClick={() => addToCart(productData as CartProduct)} className="w-full">Add to cart</Button>}
                 </div>
             </div>
         </div>

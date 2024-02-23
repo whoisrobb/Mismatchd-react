@@ -10,6 +10,8 @@ import Home from "./app/home/home";
 import { Toaster } from "./components/ui/sonner";
 import Category from "./app/home/category";
 import Product from "./app/home/product";
+import ProductFilter from "./app/home/test";
+import Products from "./app/home/products";
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/test' element={<ProductFilter />} />
+        <Route path="/products" element={<Products />} />
         <Route path="/products/:productId" element={<Product />} />
         <Route path="/categories/:category" element={<Category />} />
         <Route path="dashboard/account" element={<Account />} />

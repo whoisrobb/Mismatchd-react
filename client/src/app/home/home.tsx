@@ -59,7 +59,9 @@ const Home = () => {
                 <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
                     {products.length > 1 &&
                     products.map((item) => (
-                        <ProductCard image={item.imageUrls[1]} name={item.name} price={item.price} productId={item.productId} category={item.category} />
+                        <ProductCard
+                            product={item}
+                        />
                     ))}
                 </div>
             </ProductShell>
