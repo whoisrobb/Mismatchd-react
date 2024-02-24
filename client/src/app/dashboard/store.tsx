@@ -1,9 +1,9 @@
 import ContentSection from "@/layouts/content-section";
-import { getSingleStore, getStoreProducts } from "@/lib/server-functions/dashboard";
+import { deleteStore, getSingleStore, getStoreProducts } from "@/lib/server-functions/dashboard";
 import { TProduct, TStore } from "@/lib/types/types";
-import { PlusIcon, StarIcon } from "@radix-ui/react-icons";
+import { PlusIcon, StarIcon, TrashIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ import ProductForm from "@/components/forms/product-form";
 import UpdateProductForm from "@/components/forms/update-product";
 
 const store = () => {
-    // const { storeId } = params;
+    const navigate = useNavigate();
     const { storeId } = useParams();
     const [store, setStore] = useState<TStore | null>(null);
     const [storeProducts, setStoreProducts] = useState<TProduct[] | []>([]);
@@ -52,7 +52,7 @@ const store = () => {
         className='max-w-[900px]'
     >
       <div className="flex flex-col gap-4">
-        <div className="">
+        <div className="flex items-center gap-2">
           <Dialog>
             <DialogTrigger>
               <Button variant={'secondary'}>Create product <PlusIcon className='ml-2' /></Button>
@@ -72,6 +72,7 @@ const store = () => {
               </DialogHeader>
             </DialogContent>
           </Dialog>
+          <Button type="button" variant={'outline'} size={'icon'} onClick={() => {deleteStore(storeId as string); navigate('/dashboard/stores')}} className="hover:bg-transparent hover:border-[#ff4c4c] hover:text-[#ff4c4c]"><TrashIcon /></Button>
         </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-2">
         {storeProducts.length > 0 && storeProducts.map((product) => (

@@ -90,14 +90,14 @@ export const getSingleStore = async (storeId: string) => {
     }
 };
 
-export const createStore = async ({ name, userId }: { name: string, userId: string }) => {
+export const createStore = async ({ name, userId, description }: { name: string, userId: string, description: string }) => {
     try {
         const response = await fetch(`${serverUrl}/store/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, userId })
+            body: JSON.stringify({ name, userId, description })
         })
         if (response.ok) {
             const data = await response.json();
@@ -110,6 +110,23 @@ export const createStore = async ({ name, userId }: { name: string, userId: stri
         toast('Something went wrong!');
     }
 }
+
+export const deleteStore = async (storeId: string) => {
+    try {
+        const response = await fetch(`${serverUrl}/store/${storeId}`, {
+            method: 'DELETE'
+        })
+        if (response.ok) {
+            const data = await response.json();
+            toast(data.message);
+        } else {
+            toast('Something went wrong!');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Something went wrong!');
+    }
+};
 
 export const createProduct = async ({ formData, storeId }: { formData: FormData, storeId: string }) => {
     try {

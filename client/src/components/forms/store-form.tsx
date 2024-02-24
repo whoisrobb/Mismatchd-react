@@ -33,11 +33,11 @@ const StoreForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (values: InputSchema) => {
-        const { name } = values;
+        const { name, description } = values;
         setIsSubmitting(true);
     
         if (user) {
-            await createStore({ name, userId: user.id })
+            await createStore({ name, userId: user.id, description })
         }
 
         setIsSubmitting(false);
@@ -70,7 +70,7 @@ const StoreForm = () => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="description" {...field} />
+                <Textarea placeholder="Description" {...field} />
               </FormControl>
               {/* <FormDescription>
                 This is your public display name.

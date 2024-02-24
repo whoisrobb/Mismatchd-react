@@ -7,13 +7,25 @@ const Product = db.Product;
 // CREATE NEW STORE
 const createStore = async (req, res) => {
     try {
-        const { name, userId } = req.body;
+        const { name, userId, description } = req.body;
 
-        const newStore = await Store.create({ name, userId });
+        const newStore = await Store.create({ name, userId, description });
 
         res.status(201).json({ message: `Successfully created store ${newStore}` });
     } catch (err) {
         res.status(400).json({ message: err.message });
+    }
+}
+
+// DELETE STORE
+const deleteStore = async (req, res) => {
+    try {
+        const { storeId } = req.params;
+        const store = await Store.findByPk(storeId);
+        await store.destroy();
+        res.status(200).json({ message: 'Deleted successfully!' });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -187,6 +199,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
     createStore,
+    deleteStore,
     getStores,
     getSingleStore,
     createProduct,

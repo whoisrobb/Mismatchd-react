@@ -7,7 +7,8 @@ const { getStores,
     updateProduct,
     getStoreProducts,
     getSingleProduct,
-    deleteProduct
+    deleteProduct,
+    deleteStore
 } = require("../controllers/stores");
 const upload = require("../controllers/upload");
 const router = express.Router();
@@ -33,6 +34,9 @@ router.get('/:storeId', getSingleStore);
 
 // CREATE NEW STORE
 router.post('/create', createStore);
+
+// DELETE STORE
+router.delete('/:storeId', deleteStore);
 
 // CREATE NEW PRODUCT
 router.post('/products/create/:storeId', upload.array('file'), createProduct);
