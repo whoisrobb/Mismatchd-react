@@ -1,9 +1,10 @@
 import DesktopNav from "./desktop-nav";
 import MobileNav from "./mobile-nav";
-import { SignedOut, SignedIn, SignInButton, useUser } from "@clerk/clerk-react";
+import { SignedOut, SignedIn, useUser } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 import UserButton from "./user-button";
 import CartSheet from "@/checkout/cart-sheet";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const { user } = useUser();
@@ -25,7 +26,9 @@ const Navbar = () => {
                 </div>
 
                 <SignedOut>
-                  <SignInButton />
+                  <Link to={'/sign-in'}>
+                    <Button>Sign in</Button>
+                  </Link>
                 </SignedOut>
             </div>
         </div>
