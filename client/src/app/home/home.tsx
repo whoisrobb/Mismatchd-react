@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import ProductCard from "@/layouts/product-card";
 import ProductShell from "@/layouts/product-shell";
-import { getProducts } from "@/lib/server-functions/dashboard";
-import { TProduct } from "@/lib/types/types";
+import StoreCard from "@/layouts/store-card";
+import { getProducts, getStores } from "@/lib/server-functions/dashboard";
+import { TProduct, TStore } from "@/lib/types/types";
 import { useUser } from "@clerk/clerk-react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
@@ -11,14 +12,16 @@ import { Link } from "react-router-dom";
 const Home = () => {
     const { user } = useUser();
     const [products, setProducts] = useState<TProduct[] | []>([]);
+    const [stores, setStores] = useState<TStore[] | []>([]);
   
     useEffect(() => {
-      getCategories();
+      getData();
     }, [])
   
-    const getCategories = async () => {
-      const data = await getProducts();
-      setProducts(data);
+    const getData = async () => {
+      const [storeData, productData] = await Promise.all([getStores(), getProducts()])
+      setStores(storeData);
+      setProducts(productData);
     }
   return (
     <div className="w-full flex flex-col items-center">
@@ -74,7 +77,15 @@ const Home = () => {
                 className=""
             >
             <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
-                content here
+                    {stores.length > 1 &&
+                    stores.map((item) => (
+                        <Link to={`/dashboard/store/${item.storeId}`} key={item.storeId} className="">
+                            <StoreCard
+                                name={item.name}
+                                description={item.description}
+                            />
+                        </Link>
+                    ))}
             </div>
             </ProductShell>
         </div>

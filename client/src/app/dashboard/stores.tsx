@@ -14,6 +14,7 @@ import { getStores } from "@/lib/server-functions/dashboard";
 import { useEffect, useState } from "react";
 import { TStore } from "@/lib/types/types";
 import { Link } from "react-router-dom";
+import StoreCard from "@/layouts/store-card";
 
 const Stores = () => {
   const [stores, setStores] = useState<TStore[] | []>([]);
@@ -51,12 +52,10 @@ const Stores = () => {
             </Dialog>
           </div>
       </div>
-      <div className="">
+      <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-4">
         {stores.length > 0 && stores.map((store) => (
           <Link to={`/dashboard/store/${store.storeId}`}>
-            <Button variant={'outline'} key={store.storeId} className="h-32 w-32">
-              {store.name}
-            </Button>
+            <StoreCard name={store.name} description={store.description} />
           </Link>
         ))}
       </div>

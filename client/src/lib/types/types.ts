@@ -20,7 +20,7 @@ export type TStore = {
     storeId: string;
     name: string;
     userId: string;
-    // description: string;
+    description: string;
 }
 
 export type TProduct = {
