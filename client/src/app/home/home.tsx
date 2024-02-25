@@ -51,7 +51,7 @@ const Home = () => {
                 </Link>
             </div>
         </div>
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col gap-24 my-12">
             <ProductShell
                 title='Featured Products'
                 subtitle='Fashion foward selections just for you'
