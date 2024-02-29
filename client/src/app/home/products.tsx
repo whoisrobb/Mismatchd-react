@@ -209,14 +209,22 @@ const Products = () => {
             </Sheet>
         </div>
 
-        {products &&
-        <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
-            {products.map((item) => (
-                <ProductCard
-                    product={item}
-                />
-            ))}
-        </div>}
+        {products ?
+            products.length > 1 ?
+                <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
+                    {products?.map((item) => (
+                        <ProductCard
+                            product={item}
+                        />
+                    ))}
+                </div>
+            :   <div className="text-center">
+                    <h1 className="text-3xl font-bold">No products found</h1>
+                    <p className="text-muted-foreground text-lg">Try changing your filters,<br/>or check back later for new products</p>
+                </div>
+        :   <div className="">
+            {/* skeleton goes here */}
+            </div>}
     </ContentSection>
   )
 }
