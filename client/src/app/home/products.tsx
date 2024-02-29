@@ -31,15 +31,28 @@ import { TCategory, TProduct } from "@/lib/types/types";
 import { getCategory, getFilteredProducts } from "@/lib/server-functions/dashboard";
 import ProductCard from "@/layouts/product-card";
 import ContentSection from "@/layouts/content-section";
+import { useSearchParams } from "react-router-dom";
   
   
 const Products = () => {
+    
+    const DEFAULT_FILTERS = {
+        priceFrom: "",
+        priceTo: "",
+        order: "",
+        orderBy: "price",
+        category: "",
+    };
+
+    const [searchParams, setSearchParams] = useSearchParams(DEFAULT_FILTERS);
+
+    const priceFrom = searchParams.get("priceFrom");
+    const priceTo = searchParams.get("priceTo");
+    const order = searchParams.get("order");
+    const orderBy = searchParams.get("orderBy");
+    const category = searchParams.get("category");
+
     const [products, setProducts] = useState<TProduct[] | null>(null);
-    const [priceFrom, setPriceFrom] = useState<string | null>(null);
-    const [priceTo, setPriceTo] = useState<string | null>(null);
-    const [order, setOrder] = useState<string | null>(null);
-    const [orderBy, setOrderBy] = useState<string | null>(null);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [categories, setCategories] = useState<TCategory[]>([]);
   
     useEffect(() => {
@@ -48,10 +61,10 @@ const Products = () => {
 
     useEffect(() => {
         fetchProducts()
-    }, [priceFrom, priceTo, order, orderBy, selectedCategory]);
+    }, [priceFrom, priceTo, order, orderBy, category]);
   
     const fetchProducts = async () => {
-      const data = await getFilteredProducts({ priceFrom, priceTo, order, orderBy, category: selectedCategory });
+      const data = await getFilteredProducts({ priceFrom, priceTo, order, orderBy, category });
       setProducts(data);
     }
   
@@ -61,15 +74,24 @@ const Products = () => {
     }
 
     const handleOrder = (value: string) => {
-        setOrder(value);
+        setSearchParams(prev => {
+            prev.set("order", value)
+            return prev
+        })
     }
 
     const handleOrderBy = (value: string) => {
-        setOrderBy(value);
+        setSearchParams(prev => {
+            prev.set("orderBy", value)
+            return prev
+        })
     }
     
     const handleCategory = (value: string) => {
-        setSelectedCategory(value);
+        setSearchParams(prev => {
+            prev.set("category", value)
+            return prev
+        })
     }
 
     console.log(products)
@@ -99,15 +121,13 @@ const Products = () => {
                                 <div className="flex items-center gap-2">
                                     <Input
                                         type="number"
-                                        // value={}
-                                        onChange={(e) => setPriceFrom(e.target.value)}
+                                        onChange={(e) => setSearchParams((prev) => ({ ...prev, priceFrom: e.target.value }))}
                                         placeholder="Price from"
                                     />
                                         <span>-</span>
                                     <Input
                                         type="number"
-                                        // value={}
-                                        onChange={(e) => setPriceTo(e.target.value)}
+                                        onChange={(e) => setSearchParams((prev) => ({ ...prev, priceTo: e.target.value }))}
                                         placeholder="Price to"
                                     /> 
                                 </div>
@@ -157,7 +177,7 @@ const Products = () => {
                             </SelectContent>
                         </Select>
                     </div>
-                    <Button className="w-full justify-self-end">Clear filters</Button>
+                    <Button className="w-full justify-self-end" onClick={() => setSearchParams(DEFAULT_FILTERS)}>Clear filters</Button>
                 </SheetContent>
             </Sheet>
         </div>
