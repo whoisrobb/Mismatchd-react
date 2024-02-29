@@ -19,16 +19,18 @@ const Home = () => {
     }, [])
   
     const getData = async () => {
-      const [storeData, productData] = await Promise.all([getStores(), getProducts()])
-      setStores(storeData);
-      setProducts(productData);
+    //   const [storeData, productData] = await Promise.all([getStores(), getProducts()])
+        const storeData = await getStores();
+        const productData = await getProducts();
+        setStores(storeData);
+        setProducts(productData);
     }
   return (
     <div className="w-full flex flex-col items-center">
         <div className="flex flex-col items-center text-center h-[calc(100vh-5rem)] justify-center gap-4 max-w-6xl">
             <Link to={'https://github.com/whoisrobb/mismatchd-react'}>
                 <Button variant={'secondary'} className="flex items-center">
-                        <GitHubLogoIcon className="mr-2" />
+                    <GitHubLogoIcon className="mr-2" />
                     Star on GitHub
                 </Button>
             </Link>
