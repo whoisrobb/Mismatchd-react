@@ -111,7 +111,7 @@ const updateProduct = async (req, res) => {
 // GET PRODUCTS WITH FILTERS
 const getProducts = async (req, res) => {
     try {
-        const { priceFrom, priceTo, dateFrom, dateTo, order, orderBy, category } = req.body; // Extract filters from query params
+        const { priceFrom, priceTo, dateFrom, dateTo, order, orderBy, category, subCategory, storeId } = req.body;
 
         // Build Sequelize query conditionals based on provided filters
         const where = {};
@@ -128,7 +128,13 @@ const getProducts = async (req, res) => {
             where.createdAt = { ...where.createdAt, [Op.lte]: dateTo }; // Less than or equal to dateTo
         }
         if (category) {
-          where.category = category; // Filter by category ID
+          where.category = category;
+        }    
+        if (subCategory) {
+          where.subCategory = subCategory;
+        }    
+        if (storeId) {
+          where.StoreStoreId = storeId;
         }    
 
         // Build Sequelize order options based on user input

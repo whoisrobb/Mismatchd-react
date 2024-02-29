@@ -43,4 +43,6 @@ export type TFilters = {
     order? : string | null;
     orderBy? : string | null;
     category? : string | null;
+    subCategory? : string | null;
+    storeId? : string | null;
 };

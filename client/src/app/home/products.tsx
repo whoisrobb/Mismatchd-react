@@ -42,6 +42,7 @@ const Products = () => {
         order: "",
         orderBy: "price",
         category: "",
+        subCategory: "",
     };
 
     const [searchParams, setSearchParams] = useSearchParams(DEFAULT_FILTERS);
@@ -51,6 +52,7 @@ const Products = () => {
     const order = searchParams.get("order");
     const orderBy = searchParams.get("orderBy");
     const category = searchParams.get("category");
+    const subCategory = searchParams.get("subCategory");
 
     const [products, setProducts] = useState<TProduct[] | null>(null);
     const [categories, setCategories] = useState<TCategory[]>([]);
@@ -61,10 +63,10 @@ const Products = () => {
 
     useEffect(() => {
         fetchProducts()
-    }, [priceFrom, priceTo, order, orderBy, category]);
+    }, [priceFrom, priceTo, order, orderBy, category, subCategory]);
   
     const fetchProducts = async () => {
-      const data = await getFilteredProducts({ priceFrom, priceTo, order, orderBy, category });
+      const data = await getFilteredProducts({ priceFrom, priceTo, order, orderBy, category, subCategory });
       setProducts(data);
     }
   
@@ -90,6 +92,13 @@ const Products = () => {
     const handleCategory = (value: string) => {
         setSearchParams(prev => {
             prev.set("category", value)
+            return prev
+        })
+    }
+    
+    const handleSubcategory = (value: string) => {
+        setSearchParams(prev => {
+            prev.set("subCategory", value)
             return prev
         })
     }
@@ -165,7 +174,7 @@ const Products = () => {
                         </CardContent>
                     </Card>
                         
-                    <div className="">
+                    <div className="grid grid-cols-2 gap-2">
                         <Select onValueChange={handleCategory}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Category" />
@@ -176,7 +185,25 @@ const Products = () => {
                                 ))}
                             </SelectContent>
                         </Select>
+                    
+                        <Select onValueChange={handleSubcategory}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Set sub-category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                
+                            {categories.map((category) => (
+                                <div key={category.categoryId}>
+                                {category.Subcategories.map((subcategory) => (
+                                    <SelectItem value={subcategory.title} key={subcategory.subcategoryId} className="subcategory">{subcategory.title}</SelectItem>
+                                ))}
+                                </div>
+                            ))}
+                            </SelectContent>
+                        </Select>
                     </div>
+
+
                     <Button className="w-full justify-self-end" onClick={() => setSearchParams(DEFAULT_FILTERS)}>Clear filters</Button>
                 </SheetContent>
             </Sheet>
