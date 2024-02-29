@@ -73,7 +73,7 @@ const createProduct = async (req, res) => {
             imageUrls,
         });
       
-        res.status(201).json(newProduct);
+        res.status(201).json({ message: `Successfully created ${req.body.name}` });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -102,21 +102,12 @@ const updateProduct = async (req, res) => {
         imageUrls: updatedImageUrls,
     });
   
-    res.status(201).json(updatedProduct);
+    res.status(201).json({ message: 'Updated successfully.' });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
 };
 
-// GET PRODUCTS
-// const getProducts = async (req, res) => {
-//     try {
-//         const products = await Product.findAll();
-//         res.status(200).json(products);
-//     } catch (err) {
-//         res.status(500).json({ message: err.message });
-//     }
-// }
 // GET PRODUCTS WITH FILTERS
 const getProducts = async (req, res) => {
     try {
