@@ -41,15 +41,15 @@ export const siteConfig = {
                 items: [],
             },
             {
-                title: "Build a Board",
-                href: "/build-a-board",
-                description: "Build your own custom skateboard.",
-                items: [],
-            },
-            {
                 title: "Blog",
                 href: "/blog",
                 description: "Read our latest blog posts.",
+                items: [],
+            },
+            {
+                title: "Contact me",
+                href: "mailto:developedbyrobbie@gmail.com",
+                description: "Reach out to me.",
                 items: [],
             },
             ],
