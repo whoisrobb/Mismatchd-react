@@ -32,6 +32,7 @@ import { getCategory, getFilteredProducts } from "@/lib/server-functions/dashboa
 import ProductCard from "@/layouts/product-card";
 import ContentSection from "@/layouts/content-section";
 import { useSearchParams } from "react-router-dom";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
   
   
 const Products = () => {
@@ -56,6 +57,11 @@ const Products = () => {
 
     const [products, setProducts] = useState<TProduct[] | null>(null);
     const [categories, setCategories] = useState<TCategory[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(null);
+
+    console.log('currentPage', currentPage)
+    console.log('totalPages', totalPages)
   
     useEffect(() => {
       getCategories();
@@ -63,11 +69,13 @@ const Products = () => {
 
     useEffect(() => {
         fetchProducts()
-    }, [priceFrom, priceTo, order, orderBy, category, subCategory]);
+    }, [priceFrom, priceTo, order, orderBy, category, subCategory, currentPage]);
   
     const fetchProducts = async () => {
-      const data = await getFilteredProducts({ priceFrom, priceTo, order, orderBy, category, subCategory });
-      setProducts(data);
+      const { products, page, totalPages } = await getFilteredProducts({ priceFrom, priceTo, order, orderBy, category, subCategory, currentPage });
+      setProducts(products);
+      setCurrentPage(page)
+      setTotalPages(totalPages)
     }
   
     const getCategories = async () => {
@@ -102,8 +110,6 @@ const Products = () => {
             return prev
         })
     }
-
-    console.log(products)
   return (
     <ContentSection
         title="Products"
@@ -210,7 +216,8 @@ const Products = () => {
         </div>
 
         {products ?
-            products.length > 1 ?
+            products.length > 0 ?
+            <div className="">
                 <div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-4">
                     {products?.map((item) => (
                         <ProductCard
@@ -218,6 +225,33 @@ const Products = () => {
                         />
                     ))}
                 </div>
+                {totalPages &&
+                <div className="w-full flex justify-center">
+                <div className="flex items-center gap-2">
+                    <Button variant={'ghost'} className='text-muted-foreground' onClick={() => setCurrentPage((prev) => prev -= 1)} disabled={currentPage == 1}>
+                    <ChevronLeftIcon />
+                    Previous
+                    </Button>
+        
+                    {currentPage > 1 &&
+                    <Button variant={'ghost'} disabled>
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.625 7.5C3.625 8.12132 3.12132 8.625 2.5 8.625C1.87868 8.625 1.375 8.12132 1.375 7.5C1.375 6.87868 1.87868 6.375 2.5 6.375C3.12132 6.375 3.625 6.87868 3.625 7.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM12.5 8.625C13.1213 8.625 13.625 8.12132 13.625 7.5C13.625 6.87868 13.1213 6.375 12.5 6.375C11.8787 6.375 11.375 6.87868 11.375 7.5C11.375 8.12132 11.8787 8.625 12.5 8.625Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </Button>}
+        
+                    <Button variant={'outline'} size={'icon'}>{currentPage}</Button>
+        
+                    {currentPage < totalPages &&
+                    <Button variant={'ghost'} disabled>
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.625 7.5C3.625 8.12132 3.12132 8.625 2.5 8.625C1.87868 8.625 1.375 8.12132 1.375 7.5C1.375 6.87868 1.87868 6.375 2.5 6.375C3.12132 6.375 3.625 6.87868 3.625 7.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM12.5 8.625C13.1213 8.625 13.625 8.12132 13.625 7.5C13.625 6.87868 13.1213 6.375 12.5 6.375C11.8787 6.375 11.375 6.87868 11.375 7.5C11.375 8.12132 11.8787 8.625 12.5 8.625Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </Button>}
+        
+                    <Button variant={'ghost'} className='text-muted-foreground' onClick={() => setCurrentPage((prev) => prev += 1)} disabled={currentPage == totalPages}>
+                    Next
+                    <ChevronRightIcon />
+                    </Button>
+                </div>
+                </div>}
+            </div>
             :   <div className="text-center">
                     <h1 className="text-3xl font-bold">No products found</h1>
                     <p className="text-muted-foreground text-lg">Try changing your filters,<br/>or check back later for new products</p>

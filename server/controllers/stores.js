@@ -111,7 +111,15 @@ const updateProduct = async (req, res) => {
 // GET PRODUCTS WITH FILTERS
 const getProducts = async (req, res) => {
     try {
-        const { priceFrom, priceTo, dateFrom, dateTo, order, orderBy, category, subCategory, storeId } = req.body;
+        const { priceFrom, priceTo, dateFrom, dateTo, order, orderBy, category, subCategory, storeId, currentPage = 1, pageSize = 8 } = req.body;
+        // const { page = 1, pageSize = 8 } = req.query;
+
+        const parsedPage = parseInt(currentPage, 10) || 1;
+        const parsedPageSize = parseInt(pageSize, 10) || 10;
+
+        const offset = (parsedPage - 1) * parsedPageSize;
+        let products;
+        let totalCount;
 
         // Build Sequelize query conditionals based on provided filters
         const where = {};
@@ -147,12 +155,20 @@ const getProducts = async (req, res) => {
         }
 
         // Fetch products with filters and order
-        const products = await Product.findAll({
-            where,
-            order: orderOptions,
-        });
 
-        res.status(200).json(products);
+        [products, totalCount] = await Promise.all([
+            Product.findAll({
+                where,
+                order: orderOptions,
+                limit: parsedPageSize,
+                offset: offset,
+            }),
+            Product.count()
+        ]);
+
+        const totalPages = Math.ceil(totalCount / parsedPageSize);
+
+        res.status(200).json({ products, totalPages, page: parsedPage });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

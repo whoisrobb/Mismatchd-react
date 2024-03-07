@@ -1,13 +1,16 @@
 {
   "development": {
-    "use_env_variable": "DATABASE_URL",
-    "models": ["category.js", "product.js", "store.js", "subcategory.js"]
+    "username": "postgres",
+    "password": "iamkharri",
+    "database": "mismatchd",
+    "host": "localhost",
+    "dialect": "postgres"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "postgres",
+    "password": "iamkharri",
+    "database": "mismatchd",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
