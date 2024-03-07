@@ -39,6 +39,7 @@ const StoreForm = () => {
         if (user) {
             await createStore({ name, userId: user.id, description })
         }
+        // await createStore({ name, userId: 'muchiri', description })
 
         setIsSubmitting(false);
     }
